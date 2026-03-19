@@ -2630,7 +2630,8 @@
      * @param drugId The ID of the drug to remove.
      */
     function removeDrugFromReRxList(uiRefId, drugId) {
-      this.removeElementFromUI(this.getPrescribingDrugCardByUiRefId(uiRefId));
+      const card = document.querySelector('fieldset[data-drug-ref-id="' + drugId + '"]');
+      this.removeElementFromUI(card);
       this.removeReRxDrugId(drugId);
     }
 
