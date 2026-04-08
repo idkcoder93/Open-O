@@ -54,7 +54,7 @@ import ca.openosp.openo.utility.MiscUtils;
 import ca.openosp.openo.utility.SpringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ActionSupport;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.owasp.encoder.Encode;
@@ -68,6 +68,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -588,13 +589,6 @@ public final class RxWriteScript2Action extends ActionSupport {
             String drugId = request.getParameter("drugId");
             String text = request.getParameter("text");
 
-			if(text != null) {
-				text = Encode.forJava(text);
-			}
-
-			if(drugId != null) {
-				drugId = Encode.forJava(drugId);
-			}
 
             logger.debug("requesting drug from drugref id=" + drugId);
             RxDrugData.DrugMonograph dmono = drugData.getDrug2(drugId);
@@ -1245,7 +1239,8 @@ public final class RxWriteScript2Action extends ActionSupport {
                 allIndex.remove(n);
             }
         }
-        List<Integer> deletedIndex = allIndex;
+        List<Integer> deletedIndex = new ArrayList<>(allIndex);
+        Collections.sort(deletedIndex, Collections.reverseOrder());
         // remove closed Rx from stash
         for (Integer n : deletedIndex) {
             bean.removeStashItem(n);
