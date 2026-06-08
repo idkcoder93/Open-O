@@ -253,7 +253,7 @@ public class DocumentDaoImpl extends AbstractDaoImpl<Document> implements Docume
                 "SELECT c.id.documentNo FROM CtlDocument c " +
                 "WHERE c.id.module = 'demographic' AND c.id.moduleId = :demographicNo " +
                 "AND c.status != 'D' AND c.id.documentNo IN :docNos");
-        query.setParameter("demographicNo", demographicNo);
+        query.setParameter("demographicNo", demographicNo != null ? demographicNo.toString() : null);
         query.setParameter("docNos", docNos);
         return query.getResultList();
     }
