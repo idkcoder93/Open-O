@@ -362,7 +362,7 @@ public class LLMExtractorService {
             criteria.setUserName(li.getLoggedInProviderNo());
 
             NoteSelectionResult result = noteService.findNotes(li, criteria);
-            if (result == null) return Collections.emptyList();
+            if (result == null || result.getNotes() == null) return Collections.emptyList();
 
             return result.getNotes().stream()
                 .map(nd -> {
