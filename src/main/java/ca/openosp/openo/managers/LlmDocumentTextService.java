@@ -80,7 +80,8 @@ public class LlmDocumentTextService {
 
         // L1: in-memory hit
         if (memoryCache.containsKey(docNo)) {
-            return memoryCache.get(docNo);
+            String cachedText = memoryCache.get(docNo);
+            return cachedText.isEmpty() ? null : cachedText;
         }
 
         // Load PDF bytes — needed for hash comparison and possibly extraction
